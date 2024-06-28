@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import java.nio.file.attribute.UserPrincipalLookupService;
 
 @RestController
-@RequestMapping
 public class UserController {
 
     @GetMapping
@@ -21,7 +20,7 @@ public class UserController {
     }
 
     @GetMapping("/users")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USERS')")
     public String user() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
