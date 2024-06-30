@@ -1,0 +1,14 @@
+POST http://localhost:8080/users
+Content-Type: application/json
+
+{
+  "id": 0,
+  "name": "Marcos Nathan",
+  "username": "nathan",
+  "password": "123",
+  "roles" : ["ROLE_MANAGER", "ROLE_USER"]
+}
+
+###
+GET http://localhost:8080/managers
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2xlcyI6WyJST0xFX01BTkFHRVIiLCJST0xFX1VTRVIiXSwiaWQiOjEsInVzZXJuYW1lIjoibmF0aGFuIiwic3ViIjoibmF0aGFuIiwiaWF0IjoxNzE5NzcyMTg3LCJleHAiOjE3MTk3NzU3ODd9.KojtpVGMhdCUJ_ZSW_91tsjwYNT65Dlg83DdgwTUuWkto7gnyT2IrsteeaDCCfj0

@@ -8,6 +8,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class StartApplication implements CommandLineRunner {
@@ -17,8 +18,8 @@ public class StartApplication implements CommandLineRunner {
     @Transactional
     @Override
     public void run(String... args) throws Exception {
-        User user = userRepository.findByUsername("admin");
-        if (user == null){
+        /*Optional<User> user = userRepository.findByUsername("admin");
+        if (user.isEmpty()){
             user = new User();
             user.setName("ADMIN");
             user.setUsername("admin");
@@ -36,6 +37,6 @@ public class StartApplication implements CommandLineRunner {
             user.getRoles().add("USERS");
             userRepository.save(user);
         }
-        System.out.println(user);
+        System.out.println(user);*/
     }
 }

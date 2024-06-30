@@ -1,13 +1,17 @@
 package dio.springboot.security.dio.model;
 
+import dio.springboot.security.dio.model.enums.Role;
 import jakarta.persistence.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Entity
 @Table(name = "tab_user")
-public class User {
+public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_user")
@@ -22,10 +26,11 @@ public class User {
     @Column(length = 100, nullable = false)
     private String password;
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "tab_user_roles", joinColumns = @JoinColumn(name = "user_id"))
-    @Column(name = "role_id")
-    private List<String> roles = new ArrayList<>();
+    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
+    @JoinTable(name = "tab_user_roles", joinColumns = @JoinColumn(name = "user_id"))
+    @Column(name = "role", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private List<Role> roles;
 
     public User(){
 
@@ -55,8 +60,37 @@ public class User {
         return username;
     }
 
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return UserDetails.super.isAccountNonExpired();
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return UserDetails.super.isAccountNonLocked();
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return UserDetails.super.isCredentialsNonExpired();
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return UserDetails.super.isEnabled();
+    }
+
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return roles;
     }
 
     public String getPassword() {
@@ -65,10 +99,6 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public List<String> getRoles() {
-        return roles;
     }
 
     @Override
